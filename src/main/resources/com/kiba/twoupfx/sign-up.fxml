@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.SignUpController">
+   <top>
+      <HBox prefHeight="50" alignment="BOTTOM_CENTER">
+         <Text text="Sign Up!" >
+            <font>
+               <Font size="20" name="Albertus Extra Bold" />
+            </font>
+         </Text>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" spacing="30">
+         <HBox alignment="CENTER" spacing="10">
+            <Text text="Username:" />
+            <TextField fx:id="playerName" promptText="Username" />
+         </HBox>
+         <HBox alignment="CENTER" spacing="10">
+            <Text text="Password:" />
+            <PasswordField fx:id="password" promptText="Password" />
+         </HBox>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER">
+         <Button fx:id="signup" text="Sign up" defaultButton="true"/>
+         <Button fx:id="back" text="Back" />
+      </HBox>
+   </bottom>
+</BorderPane>
