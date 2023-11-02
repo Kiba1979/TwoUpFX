@@ -2,27 +2,49 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
     <top>
-        <HBox alignment="BOTTOM_CENTER" spacing="10">
-            <Label fx:id="welcomeText" text="Welcome" HBox.margin="10"/>
-        </HBox>
+        <Label fx:id="welcomeText" alignment="CENTER" prefHeight="61.0" prefWidth="799.0" text="Welcome " textAlignment="CENTER">
+            <font>
+                <Font name="Playpen Sans" size="24" />
+            </font>
+        </Label>
     </top>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Finished playing?">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Button fx:id="logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Quit" onAction="#logoutScreen">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
     <left>
-        <fx:define>
-            <ToggleGroup fx:id="choices" />
-        </fx:define>
-        <VBox spacing="20">
-            <Label fx:id="username" />
-            <RadioButton text="Both Heads" toggleGroup="$choices" />
-            <RadioButton text="Both Tails" toggleGroup="$choices" />
-            <RadioButton text="One Heads, One Tails" toggleGroup="$choices" />
-            <Button fx:id="spinner" text="Come in Spinner!" />
+        <VBox alignment="CENTER" prefHeight="339.0" prefWidth="250.0" spacing="20" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Label" />
+                <AnchorPane prefHeight="107.0" prefWidth="179.0">
+                    <fx:define>
+                        <ToggleGroup fx:id="choices" />
+                    </fx:define>
+                    <VBox>
+                        <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads" toggleGroup="$choices" />
+                        <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices" />
+                        <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices" />
+                    </VBox>
+                </AnchorPane>
+                <Label fx:id="rbSelection" />
+                <Button fx:id="spinner" disable="true" mnemonicParsing="false" text="Come in spinner!" />
+            </children>
         </VBox>
     </left>
-    <bottom>
-        <Button fx:id="logout" text="Logout" />
-    </bottom>
 </BorderPane>
-
