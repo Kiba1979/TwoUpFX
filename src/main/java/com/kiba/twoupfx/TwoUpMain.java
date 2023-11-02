@@ -12,8 +12,8 @@ public class TwoUpMain extends Application {
     @Override
     public void start (Stage loginStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(TwoUpMain.class.getResource("two-up.fxml"));
-        Scene scene = new Scene(loader.load(), 500, 500);
-        loginStage.setTitle("Two-Up Login!");
+        Scene scene = new Scene(loader.load());
+        loginStage.setTitle("Game Time!");
         loginStage.setScene(scene);
         loginStage.show();
     }

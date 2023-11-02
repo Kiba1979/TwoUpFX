@@ -7,12 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 public class DBUtils {
 
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username) {
+    //order by win_percentage desc
+    //limit 10
+
+    public static void changeScene (ActionEvent event, String fxmlFile, String username) {
         Parent root = null;
 
         if (username != null) {
@@ -22,19 +27,20 @@ public class DBUtils {
                 GameTimeController gameTimeController = loader.getController();
                 gameTimeController.setUserInfo(username);
             } catch (IOException e) {
+                System.out.println(e);
                 e.printStackTrace();
             }
         } else {
             try {
-                root = FXMLLoader.load(DBUtils.class.getResource(fxmlFile));
+                root = FXMLLoader.load(Objects.requireNonNull(DBUtils.class.getResource(fxmlFile)));
             } catch (IOException e) {
-                System.out.println("Error");
+                System.out.println(e);
                 e.printStackTrace();
             }
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setTitle(fxmlFile);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
@@ -47,7 +53,7 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/adams_two_up", "root", "root");
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM sign_in_credentials WHERE player_name = ?, ?");
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM sign_in_credentials WHERE player_name = ? AND player_password = ?");
             psCheckUserExists.setString(1, username);
             psCheckUserExists.setString(2, password);
             resultSet = psCheckUserExists.executeQuery();
@@ -58,21 +64,23 @@ public class DBUtils {
                 alert.setContentText("You cannot use this username.");
                 alert.show();
             } else {
-                psInsert = connection.prepareStatement("INSERT INTO sign_in_credentials (player_name, player_password VALUES (?, ?)");
+                System.out.println("User has been created!");
+                psInsert = connection.prepareStatement("INSERT INTO sign_in_credentials (player_name, player_password) VALUES (?, ?)");
                 psInsert.setString(1, username);
                 psInsert.setString(2, password);
                 psInsert.executeUpdate();
-
             }
-            changeScene(event, fxmlFile, "Game Time!", username);
+        changeScene(event, fxmlFile, username);
         } catch (SQLException e) {
             System.out.println("Error!");
+            System.out.println(e);
             e.printStackTrace();
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
@@ -80,6 +88,7 @@ public class DBUtils {
                 try {
                     psCheckUserExists.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
@@ -87,6 +96,7 @@ public class DBUtils {
                 try {
                     psInsert.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
@@ -94,11 +104,11 @@ public class DBUtils {
                 try {
                     connection.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
         }
-
     }
 
     public static void logInUser (ActionEvent event, String fxmlFile, String username, String password) {
@@ -120,7 +130,8 @@ public class DBUtils {
                 while (resultSet.next()) {
                     String retrievePassword = resultSet.getString("player_password");
                     if (retrievePassword.equals(password)) {
-                        changeScene(event, "game-time.fxml", "Game Time!" , username);
+                        System.out.println("Player name and password match!");
+                        changeScene(event, fxmlFile, username);
                     } else {
                         System.out.println("Passwords did not match!");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -128,15 +139,16 @@ public class DBUtils {
                         alert.show();
                     }
                 }
-                changeScene(event, fxmlFile, "Game Time!", username);
             }
         } catch (SQLException e) {
+            System.out.println(e);
             e.printStackTrace();
         } finally {
             if (resultSet != null) {
                 try {
                     resultSet.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
@@ -144,6 +156,7 @@ public class DBUtils {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
@@ -151,6 +164,7 @@ public class DBUtils {
                 try {
                     connection.close();
                 } catch (SQLException e) {
+                    System.out.println(e);
                     e.printStackTrace();
                 }
             }
