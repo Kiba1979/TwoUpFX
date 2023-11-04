@@ -12,39 +12,39 @@
             </font>
         </Label>
     </top>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Finished playing?">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Quit" onAction="#logoutScreen">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
-   <left>
-      <VBox alignment="CENTER" prefHeight="339.0" prefWidth="250.0" spacing="20" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Label" />
-            <AnchorPane prefHeight="107.0" prefWidth="179.0">
-                <fx:define>
-                    <ToggleGroup fx:id="choices" />
-                </fx:define>
-                <VBox>
-                    <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads" toggleGroup="$choices" />
-                    <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices" />
-                    <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices" />
-                </VBox>
-            </AnchorPane>
-             <Label fx:id="rbSelection" />
-             <Button fx:id="spinner" disable="true" mnemonicParsing="false" text="Come in spinner!" />
-         </children>
-      </VBox>
-   </left>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Finished playing?">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Button fx:id="logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Quit" onAction="#logoutScreen">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
+    <left>
+        <VBox alignment="CENTER" prefHeight="339.0" prefWidth="250.0" spacing="20" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Label" />
+                <AnchorPane prefHeight="107.0" prefWidth="179.0">
+                    <fx:define>
+                        <ToggleGroup fx:id="choices" />
+                    </fx:define>
+                    <VBox>
+                        <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads" toggleGroup="$choices" />
+                        <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices" />
+                        <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices" />
+                    </VBox>
+                </AnchorPane>
+                <Label fx:id="rbSelection" />
+                <Button fx:id="spinner" disable="true" mnemonicParsing="false" text="Come in spinner!" />
+            </children>
+        </VBox>
+    </left>
 </BorderPane>

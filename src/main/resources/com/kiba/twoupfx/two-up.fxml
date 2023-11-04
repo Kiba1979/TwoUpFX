@@ -67,18 +67,18 @@
             </Button>
         </HBox>
     </bottom>
-   <left>
-      <ImageView fitHeight="380.0" fitWidth="200.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@img/two_up_kip_v.png" />
-         </image>
-      </ImageView>
-   </left>
-   <right>
-      <ImageView fitHeight="380.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@img/two_up_kip_v.png" />
-         </image>
-      </ImageView>
-   </right>
+    <left>
+        <ImageView fitHeight="380.0" fitWidth="200.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@img/two_up_kip_v.png" />
+            </image>
+        </ImageView>
+    </left>
+    <right>
+        <ImageView fitHeight="380.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <image>
+                <Image url="@img/two_up_kip_v.png" />
+            </image>
+        </ImageView>
+    </right>
 </BorderPane>

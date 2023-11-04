@@ -70,7 +70,7 @@ public class DBUtils {
                 psInsert.setString(2, password);
                 psInsert.executeUpdate();
             }
-        changeScene(event, fxmlFile, username);
+            changeScene(event, fxmlFile, username);
         } catch (SQLException e) {
             System.out.println("Error!");
             System.out.println(e);
