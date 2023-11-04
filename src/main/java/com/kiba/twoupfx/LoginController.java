@@ -30,26 +30,11 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO
 
-        login.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.logInUser(handleLoginButton(event), "game-time.fxml", username.getText(), password.getText());
-            }
-        });
+        login.setOnAction(event -> DBUtils.logInUser(handleLoginButton(event), "game-time.fxml", username.getText(), password.getText()));
 
-        signup.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(handleSignUpButton(event), "sign-up.fxml", null);
-            }
-        });
+        signup.setOnAction(event -> DBUtils.changeScene(handleSignUpButton(event), "sign-up.fxml", null));
 
-        exit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.exit(0);
-            }
-        });
+        exit.setOnAction(event -> System.exit(0));
     }
 
     @FXML

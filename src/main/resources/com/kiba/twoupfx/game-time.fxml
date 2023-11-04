@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
+<BorderPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
     <top>
         <Label fx:id="welcomeText" alignment="CENTER" prefHeight="61.0" prefWidth="799.0" text="Welcome " textAlignment="CENTER">
             <font>
@@ -12,6 +14,15 @@
             </font>
         </Label>
     </top>
+    <center>
+        <VBox prefWidth="50">
+            <ImageView fitHeight="100.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+        </VBox>
+        <VBox prefWidth="50">
+            <ImageView fitHeight="100.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+        </VBox>
+
+    </center>
     <bottom>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -20,7 +31,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Quit" onAction="#logoutScreen">
+                <Button fx:id="logout" mnemonicParsing="false" onAction="#logoutScreen" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Quit">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -31,20 +42,38 @@
     <left>
         <VBox alignment="CENTER" prefHeight="339.0" prefWidth="250.0" spacing="20" BorderPane.alignment="CENTER">
             <children>
-                <Label text="Label" />
-                <AnchorPane prefHeight="107.0" prefWidth="179.0">
-                    <fx:define>
-                        <ToggleGroup fx:id="choices" />
-                    </fx:define>
-                    <VBox>
-                        <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads" toggleGroup="$choices" />
-                        <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices" />
-                        <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices" />
-                    </VBox>
-                </AnchorPane>
+                <Label text="Make your selection.">
+                   <font>
+                      <Font size="18.0" />
+                   </font>
+                </Label>
+                <VBox spacing="20">
+                    <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads">
+                  <font>
+                     <Font size="16.0" />
+                  </font>
+                  <toggleGroup>
+                     <ToggleGroup fx:id="choices" />
+                  </toggleGroup>
+                  </RadioButton>
+                    <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices">
+                  <font>
+                     <Font size="16.0" />
+                  </font></RadioButton>
+                    <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices">
+                  <font>
+                     <Font size="16.0" />
+                  </font></RadioButton>
+                </VBox>
                 <Label fx:id="rbSelection" />
                 <Button fx:id="spinner" disable="true" mnemonicParsing="false" text="Come in spinner!" />
             </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
         </VBox>
     </left>
 </BorderPane>
