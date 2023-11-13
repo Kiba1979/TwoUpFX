@@ -1,7 +1,6 @@
 package com.kiba.twoupfx;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,8 +22,6 @@ public class LoginController implements Initializable {
     private Button signup;
     @FXML
     private Button exit;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,4 +48,5 @@ public class LoginController implements Initializable {
     ActionEvent closeGame (ActionEvent event) {
         return event;
     }
+
 }
