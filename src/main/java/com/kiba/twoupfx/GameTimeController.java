@@ -1,7 +1,6 @@
 package com.kiba.twoupfx;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,11 +17,7 @@ public class GameTimeController implements Initializable {
     @FXML
     private Label welcomeText;
     @FXML
-    private Label username;
-    @FXML
     private Button spinner;
-    @FXML
-    private ToggleGroup choices;
     @FXML
     private RadioButton hh;
     @FXML
@@ -33,28 +28,20 @@ public class GameTimeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        logout.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "two-up.fxml", null);
-            }
-        });
+        logout.setOnAction(event -> DBUtils.changeScene(event, "two-up.fxml", null));
 
-        spinner.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (hh.isSelected()) {
-                    rbSelection.setText("You have chosen " + hh.getText() + "!");
-                    hh.setSelected(false);
-                } else if (tt.isSelected()) {
-                    rbSelection.setText("You have chosen " + tt.getText() + "!");
-                    tt.setSelected(false);
-                } else {
-                    rbSelection.setText("You have chosen " + ht.getText() + "!");
-                    ht.setSelected(false);
-                }
-                spinner.setDisable(true);
+        spinner.setOnAction(event -> {
+            if (hh.isSelected()) {
+                rbSelection.setText("You have chosen " + hh.getText() + "!");
+                hh.setSelected(false);
+            } else if (tt.isSelected()) {
+                rbSelection.setText("You have chosen " + tt.getText() + "!");
+                tt.setSelected(false);
+            } else {
+                rbSelection.setText("You have chosen " + ht.getText() + "!");
+                ht.setSelected(false);
             }
+            spinner.setDisable(true);
         });
 
     }
