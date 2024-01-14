@@ -1,17 +1,23 @@
 package com.kiba.twoupfx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameTimeController implements Initializable {
 
-
+    @FXML
+    private Label welcomeText;
     @FXML
     private Label rbSelection;
     @FXML
@@ -23,39 +29,39 @@ public class GameTimeController implements Initializable {
     @FXML
     private Button logout;
     @FXML
-    private Label welcomeText;
-    @FXML
     private Button spinner;
+    @FXML
+    private ToggleGroup choices;
     @FXML
     private RadioButton hh;
     @FXML
     private RadioButton tt;
     @FXML
     private RadioButton ht;
-    @FXML
-    private int winner;
-    @FXML
-    private int totalGames;
-    @FXML
-    private TableView leaderboard;
-    @FXML
-    private TableColumn player;
-    @FXML
-    private TableColumn wins;
-    @FXML
-    private TableColumn played;
-    @FXML
-    private TableColumn percent;
 
+    private int gameWins;
+    private int totalGames;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    @FXML
+    private TableView<PlayerLeaderboard> leaderboard;
+    @FXML
+    private TableColumn<PlayerLeaderboard, String> player;
+    @FXML
+    private TableColumn<PlayerLeaderboard, Integer> wins;
+    @FXML
+    private TableColumn<PlayerLeaderboard, Integer> played;
+    @FXML
+    private TableColumn<PlayerLeaderboard, Double> percent;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        logout.setOnAction(event -> DBUtils.changeScene(event, "two-up.fxml", null));
+        logout.setOnAction(event -> DBUtils.changeScene(logoutScreen(event), "two-up.fxml", null));
+        logout.setOnAction(event -> DBUtils.closeConnection());
 
-        spinner.setOnAction(event -> winTracker());
+        spinner.setOnAction(event -> activateButton(winTracker(event)));
 
     }
 
@@ -66,8 +72,28 @@ public class GameTimeController implements Initializable {
 
     @FXML
     public ActionEvent activateButton (ActionEvent event) {
-        spinner.setDisable(false);
+
+        RadioButton rbChoice = (RadioButton) choices.getSelectedToggle();
+        if (rbChoice != null) {
+            spinner.setDisable(false);
+            rbSelection.setText(rbChoice.getText());
+        }
+
         return event;
+    }
+
+    @FXML
+    private ActionEvent handleSpinnerButton (ActionEvent event) {
+        return event;
+    }
+
+
+
+    @FXML
+    private void addTopTen (ActionEvent event, String username, int wins, int played, double percent) {
+        PlayerLeaderboard pl = new PlayerLeaderboard(username, wins, played, percent);
+
+
     }
 
     @FXML
@@ -76,38 +102,27 @@ public class GameTimeController implements Initializable {
     }
 
     @FXML
-    public void leaderBoard (String playerName, int winner, int totalGames, double winPercent) {
-        player.setText(String.valueOf(playerName));
-        gamesWon.setText(String.valueOf(winner));
-        gamesPlayed.setText(String.valueOf(totalGames));
-        winPercentage.setText(String.valueOf(winPercent));
+    public void currentPlayerStats (int gameWins, int playedGames, double winPercent) {
+        gamesWon.setText("Wins: " + gameWins);
+        gamesPlayed.setText("Played: " + playedGames);
+        winPercentage.setText("Win %: " + winPercent);
     }
 
-    @FXML
-    public void currentPlayerStats (int gameWins, int playedGames, double winsPercent) {
-        gamesWon.setText("Games Won: " + gameWins);
-        gamesPlayed.setText("Games Played: " + playedGames);
-        winPercentage.setText("Win Percentage: " + winsPercent + "%");
-    }
-    boolean gameResults (Label rbSelection) {
+    boolean gameResults () {
         Random random = new Random();
         int coin1 = random.nextInt(2);
         int coin2 = random.nextInt(2);
         boolean winLoss = false;
         if ((coin1 == 0 && coin2 == 0) && hh.isSelected()) {
-            rbSelection.setText("You win!");
             hh.setSelected(false);
             winLoss = true;
         } else if ((coin1 == 1 && coin2 == 1) && tt.isSelected()) {
-            rbSelection.setText("You win!");
             tt.setSelected(false);
             winLoss = true;
         } else if (((coin1 == 1 && coin2 == 0) || (coin1 == 0 && coin2 == 1)) && ht.isSelected()) {
-            rbSelection.setText("You win!");
             ht.setSelected(false);
             winLoss = true;
         } else {
-            rbSelection.setText("You are not a winner this time.");
             if (hh.isSelected()) {
                 hh.setSelected(false);
             } else if (tt.isSelected()) {
@@ -120,14 +135,20 @@ public class GameTimeController implements Initializable {
         return winLoss;
     }
 
-    public void winTracker () {
-        if (gameResults(rbSelection)) {
-            winner++;
+    public ActionEvent winTracker (ActionEvent event) {
+        if (gameResults()) {
+            rbSelection.setText("You win!");
+            gameWins++;
+        } else {
+            rbSelection.setText("You are not a winner this time.");
         }
         totalGames++;
-        double winningPercent = (((double) winner / totalGames) * 100);
-        currentPlayerStats(winner, totalGames, Double.parseDouble(df.format(winningPercent)));
+        double winPercent = ((double) gameWins / totalGames) * 100;
+        currentPlayerStats(gameWins, totalGames, Double.parseDouble(df.format(winPercent)));
+
+        return event;
     }
+
 
 
 }
