@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
     <top>
@@ -15,7 +14,6 @@
                 </font>
             </Label>
         </VBox>
-
     </top>
     <center>
         <VBox alignment="CENTER_LEFT" spacing="30">
@@ -24,7 +22,7 @@
                     <Insets />
                 </opaqueInsets>
                 <VBox.margin>
-                    <Insets left="50.0" />
+                    <Insets left="70.0" />
                 </VBox.margin>
                 <Label fx:id="gamesWon" text="Wins:  0">
                     <font>
@@ -38,13 +36,13 @@
                         <Font size="18.0" />
                     </font>
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="70.0" />
                </HBox.margin>
                 </Label>
             </HBox>
             <HBox prefHeight="27.0" prefWidth="277.0">
                 <VBox.margin>
-                    <Insets left="50.0" />
+                    <Insets left="70.0" />
                 </VBox.margin>
                 <Label fx:id="winPercentage" text="Win %:  0.00%">
                     <font>
@@ -107,36 +105,20 @@
                 </font>
             </Label>
             <Button fx:id="spinner" disable="true" mnemonicParsing="false" onAction="#handleSpinnerButton" text="Come in spinner!" />
+            <fx:define>
+                <ToggleGroup fx:id="choices" />
+            </fx:define>
         </VBox>
     </left>
     <right>
         <HBox>
-            <TableView fx:id="leaderboard" prefHeight="339.0" prefWidth="308.0">
+            <TableView fx:id="leaderboard" prefHeight="339.0" prefWidth="279.0">
                 <columns>
-                    <TableColumn fx:id="player" prefWidth="100.0" style="-fx-background-color: #00843D;" text="Player" >
-                        <cellValueFactory>
-                            <PropertyValueFactory property="playerName" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="wins" prefWidth="60.0" style="-fx-background-color: #00843D;" text="Wins" >
-                        <cellValueFactory>
-                            <PropertyValueFactory property="gamesWon" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="played" prefWidth="60.0" style="-fx-background-color: #00843D;" text="Played" >
-                        <cellValueFactory>
-                            <PropertyValueFactory property="gamesPlayed" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="percent" prefWidth="100.0" style="-fx-background-color: #00843D;" text="Win %" >
-                        <cellValueFactory>
-                            <PropertyValueFactory property="winPercent" />
-                        </cellValueFactory>
-                    </TableColumn>
+                    <TableColumn fx:id="player" prefWidth="100.0" style="-fx-background-color: #00843D;" text="Player" />
+                    <TableColumn fx:id="wins" prefWidth="50.0" style="-fx-background-color: #00843D;" text="Wins" />
+                    <TableColumn fx:id="played" prefWidth="50.0" style="-fx-background-color: #00843D;" text="Played" />
+                    <TableColumn fx:id="percent" prefWidth="80.0" style="-fx-background-color: #00843D;" text="Win %" />
                 </columns>
-                <sortOrder>
-                    <fx:reference source="percent" />
-                </sortOrder>
             </TableView>
         </HBox>
     </right>

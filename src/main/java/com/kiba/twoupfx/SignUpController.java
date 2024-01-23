@@ -20,26 +20,14 @@ public class SignUpController implements Initializable {
     private PasswordField password;
     @FXML
     private Button signup;
-    @FXML
-    private int wins;
-    @FXML
-    private int played;
-    @FXML
-    private double percent;
-
-    public SignUpController(int wins, int played, double percent) {
-        this.wins = wins;
-        this.played = played;
-        this.percent = percent;
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        signup.setOnAction(event -> DBUtils.signUpUser(handleSignupButton(event), "game-time.fxml", username.getText(), password.getText()));
+
         back.setOnAction(event -> DBUtils.changeScene(handleBackButton(event), "two-up.fxml", null));
 
-        signup.setOnAction(event -> DBUtils.signUpUser(handleSignupButton(event), "game-time.fxml", username.getText(), password.getText()));
     }
 
     @FXML
@@ -49,6 +37,7 @@ public class SignUpController implements Initializable {
 
     @FXML
     public ActionEvent handleSignupButton (ActionEvent event) {
+        DBUtils.createConnection();
         return event;
     }
 
