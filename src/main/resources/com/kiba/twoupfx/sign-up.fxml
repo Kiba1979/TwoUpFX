@@ -29,22 +29,20 @@
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="55.0" prefWidth="800.0" spacing="10" style="-fx-background-color: #FFCD00;">
-         <Button fx:id="signup" defaultButton="true" text="Sign up" />
+         <Button fx:id="signup" defaultButton="true" text="Sign up" onAction="#handleSignupButton"/>
          <Button fx:id="back" onAction="#handleBackButton" text="Back" />
       </HBox>
    </bottom>
    <left>
-      <ImageView fitHeight="402.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@img/two_up_kip_v.png" />
-         </image>
+      <ImageView fitHeight="402.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true"
+                 BorderPane.alignment="CENTER">
+         <Image url="@img/two_up_kip_v.png"/>
       </ImageView>
    </left>
    <right>
-      <ImageView fitHeight="403.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@img/two_up_kip_v.png" />
-         </image>
+      <ImageView fitHeight="403.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true"
+                 BorderPane.alignment="CENTER">
+         <Image url="@img/two_up_kip_v.png"/>
       </ImageView>
    </right>
 </BorderPane>
