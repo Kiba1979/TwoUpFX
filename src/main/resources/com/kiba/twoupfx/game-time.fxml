@@ -8,7 +8,7 @@
 <BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.GameTimeController">
     <top>
         <VBox style="-fx-background-color: #FFCD00;">
-            <Label fx:id="welcomeText" alignment="CENTER" prefHeight="61.0" prefWidth="799.0" textAlignment="CENTER">
+            <Label fx:id="welcomeText" alignment="CENTER" prefHeight="61.0" prefWidth="799.0" text="Let's play Two-Up, Player!" textAlignment="CENTER">
                 <font>
                     <Font name="Playpen Sans" size="24" />
                 </font>
@@ -17,38 +17,62 @@
     </top>
     <center>
         <VBox alignment="CENTER_LEFT" spacing="30">
+            <HBox prefHeight="52.0" prefWidth="271.0">
+                <Label fx:id="playerName" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="277.0" text="Player">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                </Label>
+            </HBox>
             <HBox prefHeight="28.0" prefWidth="277.0">
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
                 <VBox.margin>
                     <Insets left="70.0" />
                 </VBox.margin>
-                <Label fx:id="gamesWon" text="Wins:  0">
+                <Text text="Wins: ">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+                <Label fx:id="gamesWon" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="104.0" text="0">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
             </HBox>
             <HBox prefHeight="29.0" prefWidth="277.0">
-                <Label fx:id="gamesPlayed" text="Played:  0">
+                <VBox.margin>
+                    <Insets left="70.0" />
+                </VBox.margin>
+                <Text text="Played: ">
                     <font>
                         <Font size="18.0" />
                     </font>
-               <HBox.margin>
-                  <Insets left="70.0" />
-               </HBox.margin>
+                </Text>
+                <Label fx:id="gamesPlayed" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="91.0" text="0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
                 </Label>
             </HBox>
             <HBox prefHeight="27.0" prefWidth="277.0">
                 <VBox.margin>
                     <Insets left="70.0" />
                 </VBox.margin>
-                <Label fx:id="winPercentage" text="Win %:  0.00%">
+                <Text text="Win %: ">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+                <Label fx:id="winPercentage" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="95.0" text="0.00">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
+                <Text text=" %">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
             </HBox>
         </VBox>
     </center>
@@ -68,9 +92,6 @@
     </bottom>
     <left>
         <VBox alignment="CENTER" prefHeight="339.0" prefWidth="250.0" spacing="20" style="-fx-background-color: #00843D;" BorderPane.alignment="CENTER">
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
             <padding>
                 <Insets left="30.0" />
             </padding>
@@ -80,7 +101,7 @@
                 </font>
             </Label>
             <VBox spacing="20">
-                <RadioButton fx:id="hh" mnemonicParsing="false" onAction="#activateButton" text="Both Heads">
+                <RadioButton fx:id="hh" onAction="#activateButton" text="Both Heads">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -88,12 +109,12 @@
                   <ToggleGroup fx:id="choices" />
                </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="tt" mnemonicParsing="false" onAction="#activateButton" text="Both Tails" toggleGroup="$choices">
+                <RadioButton fx:id="tt" onAction="#activateButton" text="Both Tails" toggleGroup="$choices">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </RadioButton>
-                <RadioButton fx:id="ht" mnemonicParsing="false" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices">
+                <RadioButton fx:id="ht" onAction="#activateButton" text="One Heads, One Tails" toggleGroup="$choices">
                     <font>
                         <Font size="16.0" />
                     </font>
@@ -105,9 +126,6 @@
                 </font>
             </Label>
             <Button fx:id="spinner" disable="true" mnemonicParsing="false" onAction="#handleSpinnerButton" text="Come in spinner!" />
-            <fx:define>
-                <ToggleGroup fx:id="choices" />
-            </fx:define>
         </VBox>
     </left>
     <right>
@@ -117,7 +135,7 @@
                     <TableColumn fx:id="player" prefWidth="100.0" style="-fx-background-color: #00843D;" text="Player" />
                     <TableColumn fx:id="wins" prefWidth="50.0" style="-fx-background-color: #00843D;" text="Wins" />
                     <TableColumn fx:id="played" prefWidth="50.0" style="-fx-background-color: #00843D;" text="Played" />
-                    <TableColumn fx:id="percent" prefWidth="80.0" style="-fx-background-color: #00843D;" text="Win %" />
+                    <TableColumn fx:id="percent" style="-fx-background-color: #00843D;" text="Win %" />
                 </columns>
             </TableView>
         </HBox>
