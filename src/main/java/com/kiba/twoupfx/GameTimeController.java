@@ -1,19 +1,19 @@
 package com.kiba.twoupfx;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameTimeController implements Initializable {
 
+    @FXML
+    public Label playerName;
     @FXML
     private Label welcomeText;
     @FXML
@@ -37,11 +37,6 @@ public class GameTimeController implements Initializable {
     @FXML
     private RadioButton ht;
     @FXML
-    private int gameWins;
-    @FXML
-    private int totalGames;
-    private static final DecimalFormat df = new DecimalFormat("0.00");
-    @FXML
     private TableView<PlayerLeaderboard> leaderboard;
     @FXML
     private TableColumn<PlayerLeaderboard, String> player;
@@ -52,6 +47,10 @@ public class GameTimeController implements Initializable {
     @FXML
     private TableColumn<PlayerLeaderboard, Double> percent;
 
+    // Sets a limit on how many decimal points the win percentage goes to
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    // Initializes the top ten leaderboard, getting information through PlayerLeaderboard.java file(Class)
     @FXML
     private void initializeTableView () throws Exception {
 
@@ -64,6 +63,7 @@ public class GameTimeController implements Initializable {
         populateTable(topTenList);
     }
 
+    // Populates the TableView from the
     private void populateTable (ObservableList<PlayerLeaderboard> topTenList) {
         leaderboard.setItems(topTenList);
     }
@@ -77,46 +77,48 @@ public class GameTimeController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        logout.setOnAction(event -> DBUtils.changeScene(logoutScreen(event), "two-up.fxml", null));
+        logout.setOnAction(event -> DBUtils.closeConnection(logoutScreen(event), "two-up.fxml", null, 0, 0, 0.00));
 
         spinner.setOnAction(event -> activateButton(winTracker(event)));
 
     }
 
+    // Registers the logout button being pressed. Cause the program to close database connections from the DBUtils.java file
+    // and then loads the two-up.fxml file information
     @FXML
     public ActionEvent logoutScreen (ActionEvent event) {
         return event;
     }
 
+    // Registers the pressing of the spinner button and starts the game to find out whether you have won or not
+    @FXML
+    private ActionEvent handleSpinnerButton (ActionEvent event) {
+        return event;
+    }
+
+    // Checks to see if you have selected any of the radio buttons
+    // If yes, it activates the spinner button
     @FXML
     public ActionEvent activateButton (ActionEvent event) {
         RadioButton rbChoice = (RadioButton) choices.getSelectedToggle();
         if (rbChoice != null) {
-            spinner.setDisable(false);
             rbSelection.setText(rbChoice.getText());
         }
-
+        spinner.setDisable(false);
         return event;
     }
 
+    // Loads information into the game-time.fxml scene
     @FXML
-    private ActionEvent handleSpinnerButton (ActionEvent event) throws SQLException, ClassNotFoundException {
-        DBUtils.topTenList();
-        return event;
+    public void setUserInfo (String username, int wins, int played, double percent) {
+        welcomeText.setText("Let's play Two-Up, " + name(username) + "!");
+        gamesWon.setText(String.valueOf(wins));
+        gamesPlayed.setText(String.valueOf(played));
+        winPercentage.setText(percent + "%");
     }
 
-    @FXML
-    public void setUserInfo (String username) {
-        welcomeText.setText("Let's play Two-Up, " + username + "!");
-    }
-
-    @FXML
-    public void currentPlayerStats (int gameWins, int playedGames, double winPercent) {
-        gamesWon.setText("Wins: " + gameWins);
-        gamesPlayed.setText("Played: " + playedGames);
-        winPercentage.setText("Win Percent: " + winPercent + "%");
-    }
-
+    // A method that checks whether your radio button choice and coin flips are true or not.
+    // It then deselects the selected radio button
     boolean gameResults () {
         Random random = new Random();
         int coin1 = random.nextInt(2);
@@ -140,33 +142,40 @@ public class GameTimeController implements Initializable {
                 ht.setSelected(false);
             }
         }
-        spinner.setDisable(true);
         return winLoss;
     }
 
+    // This method takes the stored information in setUserInfo and checks to see if you have won.
+    // It then updates setUserInfo and the database with the new information.
     public ActionEvent winTracker (ActionEvent event) {
-        PlayerLeaderboard pl = new PlayerLeaderboard();
-        System.out.println(pl.getUsername());
+        String username = name(playerName.getText());
+        int gameWins = Integer.parseInt(gamesWon.getText());
+        int totalGames = Integer.parseInt(gamesPlayed.getText());
         if (gameResults()) {
-            rbSelection.setText("You win!");
+            rbSelection.setText("You win, " + username + "!");
             gameWins++;
         } else {
-            rbSelection.setText("You are not a winner this time.");
+            rbSelection.setText("Not a winner, " + username + ".");
         }
         totalGames++;
-        double percent = Double.parseDouble(df.format(((double) gameWins / totalGames) * 100));
-        currentPlayerStats(gameWins, totalGames, percent);
-        DBUtils.updatePlayerStats(gameWins, totalGames, percent);
+        double percent = setWinPercentage(gameWins, totalGames);
+        setUserInfo(username, gameWins, totalGames, percent);
+        DBUtils.updateDB(username, gameWins, totalGames, percent);
+        spinner.setDisable(true);
         return event;
     }
 
-    public void topTenTableview () {
-
-        leaderboard.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        leaderboard.getItems().add(new PlayerLeaderboard());
-
+    // A method that works out a players win percentage
+    public double setWinPercentage (int wins, int played) {
+        return Double.parseDouble(df.format(((double) wins / played) * 100));
     }
+
+    // It is here to store a players name
+    public String name (String name) {
+        playerName.setText(name);
+        return name;
+    }
+
 
 
 }

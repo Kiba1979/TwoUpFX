@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+
 <BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.LoginController">
     <top>
         <VBox spacing="20" style="-fx-background-color: #FFCD00;">
