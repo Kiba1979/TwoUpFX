@@ -114,7 +114,7 @@ public class GameTimeController implements Initializable {
         welcomeText.setText("Let's play Two-Up, " + name(username) + "!");
         gamesWon.setText(String.valueOf(wins));
         gamesPlayed.setText(String.valueOf(played));
-        winPercentage.setText(percent + "%");
+        winPercentage.setText(String.valueOf(percent));
     }
 
     // A method that checks whether your radio button choice and coin flips are true or not.
