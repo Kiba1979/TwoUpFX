@@ -147,11 +147,10 @@ public class DBUtils {
         int played = 0;
         double percent = 0.00;
         try {
-            psCheckUserExists = connection.prepareStatement("SELECT * FROM player_stats WHERE username = ? AND password = ?");
+            psCheckUserExists = connection.prepareStatement("SELECT * FROM player_stats WHERE username = ?");
             psCheckUserExists.setString(1, username);
-            psCheckUserExists.setString(2, password);
             resultSet = psCheckUserExists.executeQuery();
-            if (resultSet.isBeforeFirst()) {
+            if (resultSet.next()) {
                 System.out.println("User already exists!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("You cannot use this username.");

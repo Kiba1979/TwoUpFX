@@ -6,20 +6,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <BorderPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kiba.twoupfx.LoginController">
     <top>
-        <VBox spacing="20" style="-fx-background-color: #FFCD00;">
+        <VBox fx:id="heading" spacing="20" style="-fx-background-color: #FFCD00;">
             <Text text="Welcome to Adam's Anzac Day Two-Up Adventure!" textAlignment="CENTER" wrappingWidth="801.357421875">
                 <font>
                     <Font size="30.0" />
                 </font>
+            <VBox.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </VBox.margin>
             </Text>
 
         </VBox>
     </top>
     <center>
-        <VBox alignment="CENTER" prefHeight="410.0" prefWidth="566.0" spacing="30" style="-fx-background-color: #00843D;">
+        <VBox fx:id="body" alignment="CENTER" prefHeight="410.0" prefWidth="566.0" spacing="30" style="-fx-background-color: #00843D;">
             <HBox alignment="CENTER" spacing="10">
                 <Text text="Username:">
                     <font>
@@ -38,26 +40,40 @@
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="614.0" spacing="10">
                 <Text text="Password:">
                     <font>
-                        <Font size="15" />
+                        <Font size="18.0" />
                     </font>
                 </Text>
-                <PasswordField fx:id="password" prefHeight="32.0" prefWidth="173.0" promptText="Password">
+                <PasswordField fx:id="password" prefHeight="32.0" prefWidth="191.0" promptText="Password">
                     <font>
                         <Font size="15" />
                     </font>
                 </PasswordField>
             </HBox>
             <HBox alignment="CENTER">
-                <Button fx:id="login" defaultButton="true" prefHeight="32.0" prefWidth="84.0" text="Login" onAction="#handleLoginButton">
+                <Button fx:id="login" defaultButton="true" onAction="#handleLoginButton" prefHeight="32.0" prefWidth="84.0" text="Login">
                     <font>
                         <Font size="15" />
                     </font>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
                 </Button>
+            <Button mnemonicParsing="false" text="Colour Change" fx:id="setting" onAction="#settingWindow">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
             </HBox>
         </VBox>
     </center>
     <bottom>
-        <HBox alignment="TOP_CENTER" prefHeight="50" spacing="10" style="-fx-background-color: #FFCD00;">
+        <HBox fx:id="bottom" alignment="TOP_CENTER" prefHeight="50" spacing="10" style="-fx-background-color: #FFCD00;">
             <Text text="Don't have an account? " wrappingWidth="235.916015625">
                 <font>
                     <Font size="18.0" />
@@ -76,15 +92,13 @@
         </HBox>
     </bottom>
     <left>
-        <ImageView fitHeight="410.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true"
-                   BorderPane.alignment="CENTER">
-            <Image url="@img/two_up_kip_v.png"/>
+        <ImageView fitHeight="410.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <Image url="@img/two_up_kip_v.png" />
         </ImageView>
     </left>
     <right>
-        <ImageView fitHeight="410.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true"
-                   BorderPane.alignment="CENTER">
-            <Image url="@img/two_up_kip_v.png"/>
+        <ImageView fitHeight="410.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <Image url="@img/two_up_kip_v.png" />
         </ImageView>
     </right>
 </BorderPane>

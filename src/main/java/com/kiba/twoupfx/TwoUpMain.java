@@ -17,9 +17,9 @@ public class TwoUpMain extends Application {
         loginStage.setScene(scene);
         loginStage.show();
     }
+
 // Starts the program
     public static void main(String[] args) {
         launch(args);
-
     }
 }

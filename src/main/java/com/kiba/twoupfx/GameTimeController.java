@@ -3,17 +3,23 @@ package com.kiba.twoupfx;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameTimeController implements Initializable {
 
     @FXML
-    public Label playerName;
+    private Label playerName;
     @FXML
     private Label welcomeText;
     @FXML
@@ -46,9 +52,30 @@ public class GameTimeController implements Initializable {
     private TableColumn<PlayerLeaderboard, Integer> played;
     @FXML
     private TableColumn<PlayerLeaderboard, Double> percent;
-
     // Sets a limit on how many decimal points the win percentage goes to
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        try {
+            initializeTableView();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        logout.setOnAction(event -> DBUtils.closeConnection(logoutScreen(event), "two-up.fxml", null, 0, 0, 0.00));
+
+        spinner.setOnAction(event -> {
+            try {
+                winTracker();
+                initializeTableView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
 
     // Initializes the top ten leaderboard, getting information through PlayerLeaderboard.java file(Class)
     @FXML
@@ -68,21 +95,6 @@ public class GameTimeController implements Initializable {
         leaderboard.setItems(topTenList);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        try {
-            initializeTableView();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        logout.setOnAction(event -> DBUtils.closeConnection(logoutScreen(event), "two-up.fxml", null, 0, 0, 0.00));
-
-        spinner.setOnAction(event -> activateButton(winTracker(event)));
-
-    }
-
     // Registers the logout button being pressed. Cause the program to close database connections from the DBUtils.java file
     // and then loads the two-up.fxml file information
     @FXML
@@ -92,7 +104,7 @@ public class GameTimeController implements Initializable {
 
     // Registers the pressing of the spinner button and starts the game to find out whether you have won or not
     @FXML
-    private ActionEvent handleSpinnerButton (ActionEvent event) {
+    private ActionEvent handleSpinnerButton (ActionEvent event) throws Exception {
         return event;
     }
 
@@ -103,8 +115,10 @@ public class GameTimeController implements Initializable {
         RadioButton rbChoice = (RadioButton) choices.getSelectedToggle();
         if (rbChoice != null) {
             rbSelection.setText(rbChoice.getText());
+            spinner.setDisable(false);
+        } else {
+            spinner.setDisable(true);
         }
-        spinner.setDisable(false);
         return event;
     }
 
@@ -117,12 +131,15 @@ public class GameTimeController implements Initializable {
         winPercentage.setText(String.valueOf(percent));
     }
 
+
+
     // A method that checks whether your radio button choice and coin flips are true or not.
     // It then deselects the selected radio button
-    boolean gameResults () {
-        Random random = new Random();
-        int coin1 = random.nextInt(2);
-        int coin2 = random.nextInt(2);
+    boolean gameResults () throws Exception {
+        CoinFlipController cfc = new CoinFlipController();
+        int coin1 = cfc.result();
+        int coin2 = cfc.result();
+        coinFlip(coin1, coin2);
         boolean winLoss = false;
         if ((coin1 == 0 && coin2 == 0) && hh.isSelected()) {
             hh.setSelected(false);
@@ -130,7 +147,7 @@ public class GameTimeController implements Initializable {
         } else if ((coin1 == 1 && coin2 == 1) && tt.isSelected()) {
             tt.setSelected(false);
             winLoss = true;
-        } else if (((coin1 == 1 && coin2 == 0) || (coin1 == 0 && coin2 == 1)) && ht.isSelected()) {
+        } else if (((coin1 == 0 && coin2 == 1) || (coin1 == 1 && coin2 == 0)) && ht.isSelected()) {
             ht.setSelected(false);
             winLoss = true;
         } else {
@@ -147,7 +164,7 @@ public class GameTimeController implements Initializable {
 
     // This method takes the stored information in setUserInfo and checks to see if you have won.
     // It then updates setUserInfo and the database with the new information.
-    public ActionEvent winTracker (ActionEvent event) {
+    public void winTracker () throws Exception {
         String username = name(playerName.getText());
         int gameWins = Integer.parseInt(gamesWon.getText());
         int totalGames = Integer.parseInt(gamesPlayed.getText());
@@ -161,8 +178,6 @@ public class GameTimeController implements Initializable {
         double percent = setWinPercentage(gameWins, totalGames);
         setUserInfo(username, gameWins, totalGames, percent);
         DBUtils.updateDB(username, gameWins, totalGames, percent);
-        spinner.setDisable(true);
-        return event;
     }
 
     // A method that works out a players win percentage
@@ -176,6 +191,17 @@ public class GameTimeController implements Initializable {
         return name;
     }
 
+    public void coinFlip (int coin1, int coin2) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("coin-flip.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
 
+        CoinFlipController cfc = loader.getController();
+
+        cfc.coinLabels(cfc.flip(coin1), cfc.flip(coin2));
+
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
 }

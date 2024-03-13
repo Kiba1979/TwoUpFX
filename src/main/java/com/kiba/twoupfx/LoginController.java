@@ -6,11 +6,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    @FXML
+    private HBox bottom;
+    @FXML
+    private VBox body;
+    @FXML
+    private VBox heading;
     @FXML
     private TextField username;
     @FXML
@@ -21,6 +29,7 @@ public class LoginController implements Initializable {
     private Button signup;
     @FXML
     private Button exit;
+
 
     // Initializes all the buttons, textfield, and password field created in the two-up.fxml file
     @Override
@@ -54,4 +63,19 @@ public class LoginController implements Initializable {
         return event;
     }
 
+    // 'Setting' onAction button that changes the gui colour scheme
+    @FXML
+    public void settingWindow() {
+        String green = "-fx-background-color: #FFCD00;";
+        String yellow = "-fx-background-color: #00843D;";
+        if (heading.getStyle().equals(green)) {
+            heading.setStyle(yellow);
+            body.setStyle(green);
+            bottom.setStyle(yellow);
+        } else {
+            heading.setStyle(green);
+            body.setStyle(yellow);
+            bottom.setStyle(green);
+        }
+    }
 }
