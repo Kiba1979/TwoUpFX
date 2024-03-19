@@ -29,9 +29,6 @@ public class CoinFlipController implements Initializable {
     @FXML
     private ImageView coinTwo;
 
-    String heads = "img/AusPennyHeads.png";
-    String tails = "img/AusPennyTails.png";
-
     private String face = "";
 
     @Override
@@ -40,8 +37,7 @@ public class CoinFlipController implements Initializable {
         close.setOnAction(this::gameReturn);
 
         try {
-            coinOneRotation();
-            coinTwoRotation();
+            coinRotation(coinOne);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -80,52 +76,38 @@ public class CoinFlipController implements Initializable {
         stage.close();
     }
 
+    public Image coinView () {
+        Image view;
+        if (face.equals("Heads")) {
+            view = new Image("AusPennyHeads.png");
+        } else {
+            view = new Image("AusPennyTails.png");
+        }
+        return view;
+    }
 
-    @FXML
-    public void coinOneRotation () {
+    public void coinRotation (ImageView image) {
+        image.setImage(coinView());
 
-        // translate1
         TranslateTransition translate1 = new TranslateTransition();
-        RotateTransition rotate1 = new RotateTransition();
-        translate1.setNode(coinOne);
+        translate1.setNode(image);
         translate1.setDuration(Duration.millis(1000));
         translate1.setCycleCount(2);
         translate1.setByY(-250);
         translate1.setAutoReverse(true);
         translate1.play();
 
-        // rotate1
-
-        rotate1.setNode(coinOne);
+        RotateTransition rotate1 = new RotateTransition();
+        rotate1.setNode(image);
         rotate1.setDuration(Duration.millis(500));
         rotate1.setCycleCount(4);
         rotate1.setInterpolator(Interpolator.LINEAR);
         rotate1.setByAngle(360);
         rotate1.setAxis(Rotate.X_AXIS);
         rotate1.play();
+
     }
 
-    @FXML
-    public void coinTwoRotation () {
 
-        // translate2
-        TranslateTransition translate2 = new TranslateTransition();
-        RotateTransition rotate2 = new RotateTransition();
-        translate2.setNode(coinTwo);
-        translate2.setDuration(Duration.millis(1000));
-        translate2.setCycleCount(2);
-        translate2.setByY(-250);
-        translate2.setAutoReverse(true);
-        translate2.play();
-
-        // rotate2
-        rotate2.setNode(coinTwo);
-        rotate2.setDuration(Duration.millis(500));
-        rotate2.setCycleCount(4);
-        rotate2.setInterpolator(Interpolator.LINEAR);
-        rotate2.setByAngle(360);
-        rotate2.setAxis(Rotate.X_AXIS);
-        rotate2.play();
-    }
 
 }

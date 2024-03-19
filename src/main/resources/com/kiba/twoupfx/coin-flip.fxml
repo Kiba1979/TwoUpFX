@@ -12,7 +12,8 @@
           <Text text="Coin Results" textAlignment="CENTER">
             <font>
                <Font size="36.0" />
-            </font></Text>
+            </font>
+          </Text>
       </HBox>
    </top>
    <bottom>
@@ -27,7 +28,7 @@
    <center>
       <VBox alignment="CENTER" prefHeight="176.0" prefWidth="301.0" BorderPane.alignment="CENTER">
          <HBox alignment="CENTER" prefHeight="150.0" prefWidth="301.0">
-            <Label fx:id="coinLeft" >
+            <Label fx:id="coinLeft">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -38,7 +39,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="coinRight" alignment="CENTER_RIGHT" >
+            <Label fx:id="coinRight" alignment="CENTER_RIGHT">
                <font>
                   <Font size="20.0" />
                </font>

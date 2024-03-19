@@ -8,10 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -104,7 +101,7 @@ public class GameTimeController implements Initializable {
 
     // Registers the pressing of the spinner button and starts the game to find out whether you have won or not
     @FXML
-    private ActionEvent handleSpinnerButton (ActionEvent event) throws Exception {
+    private ActionEvent handleSpinnerButton (ActionEvent event) {
         return event;
     }
 
@@ -198,7 +195,12 @@ public class GameTimeController implements Initializable {
 
         CoinFlipController cfc = loader.getController();
 
-        cfc.coinLabels(cfc.flip(coin1), cfc.flip(coin2));
+        try {
+            cfc.coinLabels(cfc.flip(coin1), cfc.flip(coin2));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 
         stage.setScene(new Scene(root));
         stage.show();
