@@ -26,9 +26,9 @@
       </HBox>
    </bottom>
    <center>
-      <VBox alignment="CENTER" prefHeight="176.0" prefWidth="301.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="176.0" prefWidth="301.0" BorderPane.alignment="CENTER" >
          <HBox alignment="CENTER" prefHeight="150.0" prefWidth="301.0">
-            <Label fx:id="coinLeft">
+            <Label fx:id="coinLeft" >
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -39,7 +39,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="coinRight" alignment="CENTER_RIGHT">
+            <Label fx:id="coinRight" alignment="CENTER_RIGHT" >
                <font>
                   <Font size="20.0" />
                </font>
@@ -51,13 +51,9 @@
       </VBox>
    </center>
    <left>
-      <ImageView fx:id="coinOne" fitHeight="108.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER">
-         <Image url="@img/AusPennyHeads.png" />
-      </ImageView>
+      <ImageView fx:id="coinOne" fitHeight="108.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER" />
    </left>
    <right>
-      <ImageView fx:id="coinTwo" fitHeight="128.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER">
-         <Image url="@img/AusPennyTails.png" />
-      </ImageView>
+      <ImageView fx:id="coinTwo" fitHeight="128.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_CENTER" />
    </right>
 </BorderPane>

@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
@@ -51,6 +53,9 @@ public class GameTimeController implements Initializable {
     private TableColumn<PlayerLeaderboard, Double> percent;
     // Sets a limit on how many decimal points the win percentage goes to
     private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    Coin coin1 = new Coin();
+    Coin coin2 = new Coin();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,6 +107,9 @@ public class GameTimeController implements Initializable {
     // Registers the pressing of the spinner button and starts the game to find out whether you have won or not
     @FXML
     private ActionEvent handleSpinnerButton (ActionEvent event) {
+        if (event.getSource() == spinner) {
+            System.out.println("Stop.....please......NOOOOOO!");
+        }
         return event;
     }
 
@@ -113,9 +121,8 @@ public class GameTimeController implements Initializable {
         if (rbChoice != null) {
             rbSelection.setText(rbChoice.getText());
             spinner.setDisable(false);
-        } else {
-            spinner.setDisable(true);
         }
+
         return event;
     }
 
@@ -128,23 +135,20 @@ public class GameTimeController implements Initializable {
         winPercentage.setText(String.valueOf(percent));
     }
 
-
-
     // A method that checks whether your radio button choice and coin flips are true or not.
     // It then deselects the selected radio button
-    boolean gameResults () throws Exception {
-        CoinFlipController cfc = new CoinFlipController();
-        int coin1 = cfc.result();
-        int coin2 = cfc.result();
+    boolean gameResults () throws IOException {
+        int coinOne = coin1.flip();
+        int coinTwo = coin2.flip();
         coinFlip(coin1, coin2);
         boolean winLoss = false;
-        if ((coin1 == 0 && coin2 == 0) && hh.isSelected()) {
+        if ((coinOne == 0 && coinTwo == 0) && hh.isSelected()) {
             hh.setSelected(false);
             winLoss = true;
-        } else if ((coin1 == 1 && coin2 == 1) && tt.isSelected()) {
+        } else if ((coinOne == 1 && coinTwo == 1) && tt.isSelected()) {
             tt.setSelected(false);
             winLoss = true;
-        } else if (((coin1 == 0 && coin2 == 1) || (coin1 == 1 && coin2 == 0)) && ht.isSelected()) {
+        } else if (((coinOne == 0 && coinTwo == 1) || (coinOne == 1 && coinTwo == 0)) && ht.isSelected()) {
             ht.setSelected(false);
             winLoss = true;
         } else {
@@ -161,7 +165,7 @@ public class GameTimeController implements Initializable {
 
     // This method takes the stored information in setUserInfo and checks to see if you have won.
     // It then updates setUserInfo and the database with the new information.
-    public void winTracker () throws Exception {
+    public void winTracker () throws IOException {
         String username = name(playerName.getText());
         int gameWins = Integer.parseInt(gamesWon.getText());
         int totalGames = Integer.parseInt(gamesPlayed.getText());
@@ -171,6 +175,7 @@ public class GameTimeController implements Initializable {
         } else {
             rbSelection.setText("Not a winner, " + username + ".");
         }
+        spinner.setDisable(true);
         totalGames++;
         double percent = setWinPercentage(gameWins, totalGames);
         setUserInfo(username, gameWins, totalGames, percent);
@@ -188,20 +193,19 @@ public class GameTimeController implements Initializable {
         return name;
     }
 
-    public void coinFlip (int coin1, int coin2) throws Exception {
+    @FXML
+    public void coinFlip (Coin coinOne, Coin coinTwo) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("coin-flip.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
 
         CoinFlipController cfc = loader.getController();
-
         try {
-            cfc.coinLabels(cfc.flip(coin1), cfc.flip(coin2));
+            cfc.coinLabels(coinOne, coinTwo);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-
         stage.setScene(new Scene(root));
         stage.show();
     }
